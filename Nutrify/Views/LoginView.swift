@@ -8,6 +8,8 @@ struct LoginView: View {
     @State private var weight = ""
     @State private var age = ""
     @State private var isRegistering = false
+    
+    let authService = AuthService()
 
     var body: some View {
         VStack(spacing: 20) {
@@ -44,20 +46,30 @@ struct LoginView: View {
             // Dynamic Input Fields
             if isRegistering {
                 // Registration Fields
-                TextField("User Name", text: $username)
-                    .textFieldStyle(RoundedBorderTextFieldStyle())
-                TextField("Email Address", text: $email)
-                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                InputField(label: "User Name", value: $username)
+                InputField(label: "Email Address", value: $email)
                 SecureField("Password", text: $password)
                     .textFieldStyle(RoundedBorderTextFieldStyle())
-                TextField("Height (cm)", text: $height)
-                    .textFieldStyle(RoundedBorderTextFieldStyle())
-                TextField("Weight (kg)", text: $weight)
-                    .textFieldStyle(RoundedBorderTextFieldStyle())
-                TextField("Age", text: $age)
-                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                InputField(label: "Height (cm)", value: $height)
+                    .keyboardType(.decimalPad)
+                InputField(label: "Weight (kg)", value: $weight)
+                InputField(label: "Age", value: $age)
                 Button(action: {
-                    // Register button action here
+                    guard let heightValue = Double(height) else { return }
+                    
+                    guard let weightValue = Double(weight) else { return }
+                    
+                    guard let ageValue = Int(age) else { return }
+   
+                    Task {
+                        do {
+                            let user = try await authService.register(email: email, password: password, username: username, height: heightValue, weight: weightValue, age: ageValue)
+                        }
+                        catch let error {
+                            print(error.localizedDescription)
+                        }
+                        
+                    }
                 }) {
                     Text("Create an Account")
                         .frame(maxWidth: .infinity)
