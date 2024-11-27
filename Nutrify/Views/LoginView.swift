@@ -8,6 +8,8 @@ struct LoginView: View {
     @State private var weight = ""
     @State private var age = ""
     @State private var isRegistering = false
+    @State private var isLoading = false
+    @EnvironmentObject var userSession: UserSession
     
     let authService = AuthService()
 
@@ -53,72 +55,53 @@ struct LoginView: View {
                 InputField(label: "Height (cm)", value: $height)
                     .keyboardType(.decimalPad)
                 InputField(label: "Weight (kg)", value: $weight)
+                    .keyboardType(.decimalPad)
                 InputField(label: "Age", value: $age)
-                Button(action: {
-                    guard let heightValue = Double(height) else { return }
+                    .keyboardType(.numberPad)
+                
+                NutrifyButton(isLoading: $isLoading, action: {
+                    isLoading = true
+                    guard let heightValue = Double(height) else {
+                        isLoading = false
+                        return
+                    }
                     
-                    guard let weightValue = Double(weight) else { return }
+                    guard let weightValue = Double(weight) else {
+                        isLoading = false
+                        return
+                    }
                     
-                    guard let ageValue = Int(age) else { return }
+                    guard let ageValue = Int(age) else {
+                        isLoading = false
+                        return
+                    }
    
                     Task {
                         do {
-                            let user = try await authService.register(email: email, password: password, username: username, height: heightValue, weight: weightValue, age: ageValue)
+                            try await authService.register(email: email, password: password, username: username, height: heightValue, weight: weightValue, age: ageValue)
                         }
                         catch let error {
                             print(error.localizedDescription)
                         }
-                        
+                        isLoading = false
                     }
-                }) {
-                    Text("Create an Account")
-                        .frame(maxWidth: .infinity)
-                        .padding()
-                        .foregroundColor(.white)
-                        .background(Color.blue)
-                        .cornerRadius(8)
-                }
+                }, title: "Create an Account")
             } else {
                 // Login Fields
-                TextField("Email Address", text: $email)
-                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                InputField(label: "Email Address", value: $email)
                 SecureField("Password", text: $password)
                     .textFieldStyle(RoundedBorderTextFieldStyle())
-                Button(action: {
-                    // Login button action here
-                }) {
-                    Text("Login")
-                        .frame(maxWidth: .infinity)
-                        .padding()
-                        .foregroundColor(.white)
-                        .background(Color.blue)
-                        .cornerRadius(8)
-                }
-            }
-            
-            // Continue with Google
-            HStack {
-                Spacer()
-                Text("or use Google to Login")
-                    .font(.footnote)
-                    .foregroundColor(.gray)
-                Spacer()
-            }
-            
-            Button(action: {
-                // Google login action here
-            }) {
-                HStack {
-                    Image(systemName: "globe")
-                        .foregroundColor(.gray)
-                    Text("Continue with Google")
-                        .foregroundColor(.gray)
-                }
-                .padding()
-                .overlay(
-                    RoundedRectangle(cornerRadius: 8)
-                        .stroke(Color.gray, lineWidth: 1)
-                )
+                NutrifyButton(isLoading: $isLoading, action: {
+                    isLoading = true
+                    Task {
+                        do {
+                            try await authService.login(email: email, password: password)
+                        }
+                        catch let error {
+                            print(error.localizedDescription)
+                        }
+                        isLoading = false
+                    }}, title: "Login")
             }
             
             Spacer()
@@ -129,7 +112,9 @@ struct LoginView: View {
 
 struct LoginView_Previews: PreviewProvider {
     static var previews: some View {
-        LoginView()
+        let userSession = UserSession()
+        userSession.currentUser = User(id: "1", username: "haha", email: "wow", height: 4, weight: 4, age: 8, createdAt: "no")
+        return LoginView().environmentObject(userSession)
     }
 }
 

@@ -10,7 +10,15 @@ import FirebaseAuth
 import FirebaseDatabase
 
 class AuthService {
-    func register(email: String, password: String, username: String, height: Double, weight: Double, age: Int) async throws -> User {
+    func login(email: String, password: String) async throws {
+        try await Auth.auth().signIn(withEmail: email, password: password)
+    }
+    
+    func logout() throws {
+        try Auth.auth().signOut()
+    }
+    
+    func register(email: String, password: String, username: String, height: Double, weight: Double, age: Int) async throws {
 
         let authResult = try await Auth.auth().createUser(withEmail: email, password: password)
 
@@ -20,7 +28,5 @@ class AuthService {
         
         let ref = Database.database().reference()
         try await ref.child("users").child(user.id).setValue(user.toDictionary())
-        
-        return user
     }
 }

@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct SettingsView: View {
+    let authService = AuthService()
+    
     var body: some View {
         VStack(alignment: .leading, spacing: 20) {
             Text("Settings")
@@ -20,8 +22,12 @@ struct SettingsView: View {
             Toggle("Dark Mode", isOn: .constant(false))
             
             Button("Log Out") {
-                // Add log out functionality here
-                print("Logging out...")
+                do {
+                    try authService.logout()
+                }
+                catch let error {
+                    print(error.localizedDescription)
+                }
             }
             .foregroundColor(.red)
             

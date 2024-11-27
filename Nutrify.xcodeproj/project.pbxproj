@@ -25,6 +25,8 @@
 		8C6AF44E2CF7211700981E9F /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C6AF44D2CF7211700981E9F /* LoginView.swift */; };
 		8C6AF4522CF721D800981E9F /* InputField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C6AF4512CF721D800981E9F /* InputField.swift */; };
 		8C6AF4542CF721F200981E9F /* LogPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C6AF4532CF721F200981E9F /* LogPageView.swift */; };
+		8C6AF4562CF7263A00981E9F /* UserSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C6AF4552CF7263A00981E9F /* UserSession.swift */; };
+		8C6AF4582CF738E300981E9F /* NutrifyButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C6AF4572CF738E300981E9F /* NutrifyButton.swift */; };
 		8CDFE88D2CF71D5700BC103D /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CDFE88C2CF71D5700BC103D /* AuthService.swift */; };
 		8CDFE8902CF71DC900BC103D /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 8CDFE88F2CF71DC900BC103D /* FirebaseAnalytics */; };
 		8CDFE8922CF71DC900BC103D /* FirebaseAnalyticsOnDeviceConversion in Frameworks */ = {isa = PBXBuildFile; productRef = 8CDFE8912CF71DC900BC103D /* FirebaseAnalyticsOnDeviceConversion */; };
@@ -51,6 +53,8 @@
 		8C6AF44D2CF7211700981E9F /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		8C6AF4512CF721D800981E9F /* InputField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputField.swift; sourceTree = "<group>"; };
 		8C6AF4532CF721F200981E9F /* LogPageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogPageView.swift; sourceTree = "<group>"; };
+		8C6AF4552CF7263A00981E9F /* UserSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSession.swift; sourceTree = "<group>"; };
+		8C6AF4572CF738E300981E9F /* NutrifyButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NutrifyButton.swift; sourceTree = "<group>"; };
 		8CDFE88C2CF71D5700BC103D /* AuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthService.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -125,6 +129,7 @@
 			isa = PBXGroup;
 			children = (
 				8C6AF4482CF7200300981E9F /* User.swift */,
+				8C6AF4552CF7263A00981E9F /* UserSession.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -140,6 +145,7 @@
 				7832C7292CDE3877008148C4 /* SocialView.swift */,
 				7832C72B2CDE3883008148C4 /* GoalView.swift */,
 				8C6AF44D2CF7211700981E9F /* LoginView.swift */,
+				8C6AF4572CF738E300981E9F /* NutrifyButton.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -241,10 +247,12 @@
 				7832C7112CDE35CC008148C4 /* ContentView.swift in Sources */,
 				7832C7262CDE3859008148C4 /* HomeView.swift in Sources */,
 				8CDFE88D2CF71D5700BC103D /* AuthService.swift in Sources */,
+				8C6AF4562CF7263A00981E9F /* UserSession.swift in Sources */,
 				8C6AF4542CF721F200981E9F /* LogPageView.swift in Sources */,
 				8C6AF44E2CF7211700981E9F /* LoginView.swift in Sources */,
 				8C6AF4522CF721D800981E9F /* InputField.swift in Sources */,
 				7832C7302CDE3A7B008148C4 /* SettingsView.swift in Sources */,
+				8C6AF4582CF738E300981E9F /* NutrifyButton.swift in Sources */,
 				8C6AF4492CF7200300981E9F /* User.swift in Sources */,
 				7832C70F2CDE35CC008148C4 /* NutrifyApp.swift in Sources */,
 				7832C72C2CDE3883008148C4 /* GoalView.swift in Sources */,
