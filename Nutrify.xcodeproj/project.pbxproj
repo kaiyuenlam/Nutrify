@@ -18,6 +18,9 @@
 		7832C72A2CDE3877008148C4 /* SocialView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7832C7292CDE3877008148C4 /* SocialView.swift */; };
 		7832C72C2CDE3883008148C4 /* GoalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7832C72B2CDE3883008148C4 /* GoalView.swift */; };
 		7832C7302CDE3A7B008148C4 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7832C72F2CDE3A7B008148C4 /* SettingsView.swift */; };
+		78F2C4462CF7654F00E36F5A /* ChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78F2C4452CF7654F00E36F5A /* ChartView.swift */; };
+		78F2C4492CF7658B00E36F5A /* SwiftUICharts in Frameworks */ = {isa = PBXBuildFile; productRef = 78F2C4482CF7658B00E36F5A /* SwiftUICharts */; };
+		78F2C44D2CF7678600E36F5A /* NutritionDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78F2C44C2CF7678600E36F5A /* NutritionDataModel.swift */; };
 		8C6AF4442CF71FAB00981E9F /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 8C6AF4432CF71FAB00981E9F /* FirebaseAuth */; };
 		8C6AF4462CF71FD800981E9F /* FirebaseDatabase in Frameworks */ = {isa = PBXBuildFile; productRef = 8C6AF4452CF71FD800981E9F /* FirebaseDatabase */; };
 		8C6AF4492CF7200300981E9F /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C6AF4482CF7200300981E9F /* User.swift */; };
@@ -48,6 +51,8 @@
 		7832C7292CDE3877008148C4 /* SocialView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialView.swift; sourceTree = "<group>"; };
 		7832C72B2CDE3883008148C4 /* GoalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalView.swift; sourceTree = "<group>"; };
 		7832C72F2CDE3A7B008148C4 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		78F2C4452CF7654F00E36F5A /* ChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartView.swift; sourceTree = "<group>"; };
+		78F2C44C2CF7678600E36F5A /* NutritionDataModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NutritionDataModel.swift; sourceTree = SOURCE_ROOT; };
 		8C6AF4482CF7200300981E9F /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		8C6AF44A2CF7204A00981E9F /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		8C6AF44D2CF7211700981E9F /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
@@ -68,6 +73,7 @@
 				8CDFE8902CF71DC900BC103D /* FirebaseAnalytics in Frameworks */,
 				8CDFE8982CF71DC900BC103D /* FirebaseAppDistribution-Beta in Frameworks */,
 				8CDFE8942CF71DC900BC103D /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */,
+				78F2C4492CF7658B00E36F5A /* SwiftUICharts in Frameworks */,
 				8C6AF4462CF71FD800981E9F /* FirebaseDatabase in Frameworks */,
 				8CDFE8922CF71DC900BC103D /* FirebaseAnalyticsOnDeviceConversion in Frameworks */,
 			);
@@ -128,6 +134,7 @@
 		8C6AF4472CF71FF900981E9F /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				78F2C44C2CF7678600E36F5A /* NutritionDataModel.swift */,
 				8C6AF4482CF7200300981E9F /* User.swift */,
 				8C6AF4552CF7263A00981E9F /* UserSession.swift */,
 			);
@@ -146,6 +153,7 @@
 				7832C72B2CDE3883008148C4 /* GoalView.swift */,
 				8C6AF44D2CF7211700981E9F /* LoginView.swift */,
 				8C6AF4572CF738E300981E9F /* NutrifyButton.swift */,
+				78F2C4452CF7654F00E36F5A /* ChartView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -182,6 +190,7 @@
 				8CDFE8972CF71DC900BC103D /* FirebaseAppDistribution-Beta */,
 				8C6AF4432CF71FAB00981E9F /* FirebaseAuth */,
 				8C6AF4452CF71FD800981E9F /* FirebaseDatabase */,
+				78F2C4482CF7658B00E36F5A /* SwiftUICharts */,
 			);
 			productName = Nutrify;
 			productReference = 7832C70B2CDE35CC008148C4 /* Nutrify.app */;
@@ -213,6 +222,7 @@
 			mainGroup = 7832C7022CDE35CC008148C4;
 			packageReferences = (
 				8CDFE88E2CF71DC900BC103D /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				78F2C4472CF7658B00E36F5A /* XCRemoteSwiftPackageReference "ChartView" */,
 			);
 			productRefGroup = 7832C70C2CDE35CC008148C4 /* Products */;
 			projectDirPath = "";
@@ -243,6 +253,7 @@
 			files = (
 				7832C7182CDE35CE008148C4 /* Persistence.swift in Sources */,
 				7832C72A2CDE3877008148C4 /* SocialView.swift in Sources */,
+				78F2C44D2CF7678600E36F5A /* NutritionDataModel.swift in Sources */,
 				7832C71B2CDE35CE008148C4 /* Nutrify.xcdatamodeld in Sources */,
 				7832C7112CDE35CC008148C4 /* ContentView.swift in Sources */,
 				7832C7262CDE3859008148C4 /* HomeView.swift in Sources */,
@@ -251,6 +262,7 @@
 				8C6AF4542CF721F200981E9F /* LogPageView.swift in Sources */,
 				8C6AF44E2CF7211700981E9F /* LoginView.swift in Sources */,
 				8C6AF4522CF721D800981E9F /* InputField.swift in Sources */,
+				78F2C4462CF7654F00E36F5A /* ChartView.swift in Sources */,
 				7832C7302CDE3A7B008148C4 /* SettingsView.swift in Sources */,
 				8C6AF4582CF738E300981E9F /* NutrifyButton.swift in Sources */,
 				8C6AF4492CF7200300981E9F /* User.swift in Sources */,
@@ -464,6 +476,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		78F2C4472CF7658B00E36F5A /* XCRemoteSwiftPackageReference "ChartView" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/AppPear/ChartView";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.5.5;
+			};
+		};
 		8CDFE88E2CF71DC900BC103D /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
@@ -475,6 +495,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		78F2C4482CF7658B00E36F5A /* SwiftUICharts */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 78F2C4472CF7658B00E36F5A /* XCRemoteSwiftPackageReference "ChartView" */;
+			productName = SwiftUICharts;
+		};
 		8C6AF4432CF71FAB00981E9F /* FirebaseAuth */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 8CDFE88E2CF71DC900BC103D /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;

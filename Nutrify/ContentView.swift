@@ -17,7 +17,7 @@ struct ContentView: View {
         if userSession.currentUser != nil {
             TabView {
                 NavigationView {
-                    HomeView(nutritionData: a)
+                    HomeView()
                         .navigationTitle("Home")
                 }
                 .tabItem {
