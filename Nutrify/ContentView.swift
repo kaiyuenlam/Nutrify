@@ -11,12 +11,13 @@ import FirebaseCore
 
 struct ContentView: View {
     @EnvironmentObject var userSession: UserSession
+    let a = NutritionDataModel()
     
     var body: some View {
         if userSession.currentUser != nil {
             TabView {
                 NavigationView {
-                    HomeView()
+                    HomeView(nutritionData: a)
                         .navigationTitle("Home")
                 }
                 .tabItem {
@@ -72,7 +73,7 @@ struct ContentView: View {
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         let userSession = UserSession()
-
+        userSession.currentUser = User(id: "1", username: "exampleusername", email: "example@example.com", height: 160, weight: 50, age: 20, createdAt: "2024-11-27T08:36:40Z")
         return ContentView().environmentObject(userSession)
     }
 }
