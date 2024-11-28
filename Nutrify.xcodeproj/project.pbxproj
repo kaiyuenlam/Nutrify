@@ -160,9 +160,9 @@
 		8C6AF4502CF7213F00981E9F /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				8C6AF4532CF721F200981E9F /* LogPageView.swift */,
 				8C6AF4512CF721D800981E9F /* InputField.swift */,
 				7832C7252CDE3859008148C4 /* HomeView.swift */,
+				8C6AF4532CF721F200981E9F /* LogPageView.swift */,
 				7832C7272CDE386A008148C4 /* LogView.swift */,
 				78107C062CF90E21000234CF /* ExerciseLogView.swift */,
 				7832C7292CDE3877008148C4 /* SocialView.swift */,

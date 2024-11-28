@@ -19,7 +19,7 @@ struct HomeView: View {
     }
 
     var body: some View {
-        VStack(alignment: .leading) {
+        VStack {
             // Today's Progress Title
             Text("Today's Progress")
                 .font(.title)
@@ -119,9 +119,10 @@ struct HomeView: View {
             WaterIntakeView()
         }
         .frame(alignment: .top)
+        .padding(20)
         .onAppear {
             // Ensure today's record is loaded
-            todayRecordViewModel.fetchOrCreateTodayRecord(context: context)
+            todayRecordViewModel.fetchOrCreateTodayRecord()
         }
     }
 }

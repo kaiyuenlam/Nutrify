@@ -11,6 +11,7 @@ import FirebaseCore
 
 struct ContentView: View {
     @EnvironmentObject var userSession: UserSession
+    @EnvironmentObject var todayRecordViewModel: TodayRecordViewModel
     @Environment(\.managedObjectContext) private var context
     
     var nutritionDataModel = NutritionDataModel() // Dummy model for user goal
@@ -21,7 +22,6 @@ struct ContentView: View {
                 TabView {
                     NavigationView {
                         HomeView(nutritionData: nutritionDataModel)
-                            .environmentObject(TodayRecordViewModel(context: context))
                             .navigationTitle("Home")
                     }
                     .tabItem {

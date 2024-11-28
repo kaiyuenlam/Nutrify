@@ -69,6 +69,7 @@ struct NutrifyApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
     @StateObject private var userSession = UserSession()
     let persistenceController = PersistenceController.shared
+    @StateObject private var todayRecordViewModel = TodayRecordViewModel(context: PersistenceController.shared.container.viewContext)
 
     var body: some Scene {
         WindowGroup {
@@ -77,6 +78,7 @@ struct NutrifyApp: App {
                 ContentView()
                     .environment(\.managedObjectContext, persistenceController.container.viewContext)
                     .environmentObject(userSession)
+                    .environmentObject(todayRecordViewModel)
             } else {
                 LoginView()
                     .environmentObject(userSession)
