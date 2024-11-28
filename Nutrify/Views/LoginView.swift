@@ -9,6 +9,7 @@ struct LoginView: View {
     @State private var age = ""
     @State private var isRegistering = false
     @State private var isLoading = false
+    @State private var errorMessage: AlertMessage?
     @EnvironmentObject var userSession: UserSession
     
     let authService = AuthService()
@@ -60,55 +61,111 @@ struct LoginView: View {
                     .keyboardType(.numberPad)
                 
                 NutrifyButton(isLoading: $isLoading, action: {
-                    isLoading = true
-                    guard let heightValue = Double(height) else {
-                        isLoading = false
-                        return
-                    }
-                    
-                    guard let weightValue = Double(weight) else {
-                        isLoading = false
-                        return
-                    }
-                    
-                    guard let ageValue = Int(age) else {
-                        isLoading = false
-                        return
-                    }
-   
-                    Task {
-                        do {
-                            try await authService.register(email: email, password: password, username: username, height: heightValue, weight: weightValue, age: ageValue)
-                        }
-                        catch let error {
-                            print(error.localizedDescription)
-                        }
-                        isLoading = false
-                    }
+                    handleRegistration()
                 }, title: "Create an Account")
+                
             } else {
                 // Login Fields
                 InputField(label: "Email Address", value: $email)
+                    .keyboardType(.emailAddress)
                 SecureField("Password", text: $password)
                     .textFieldStyle(RoundedBorderTextFieldStyle())
                 NutrifyButton(isLoading: $isLoading, action: {
-                    isLoading = true
-                    Task {
-                        do {
-                            try await authService.login(email: email, password: password)
-                        }
-                        catch let error {
-                            print(error.localizedDescription)
-                        }
-                        isLoading = false
-                    }}, title: "Login")
+                    handleLogin()
+                }, title: "Login")
             }
             
             Spacer()
         }
         .padding()
+        .disabled(isLoading)
+        .alert(item: $errorMessage) { alert in
+            Alert(title: Text("Error"), message: Text(alert.message), dismissButton: .default(Text("OK")))
+        }
     }
+    
+    private func handleRegistration() {
+        isLoading = true
+        errorMessage = nil
+        
+        guard !username.isEmpty else {
+            errorMessage = AlertMessage(message: "Username is required.")
+            isLoading = false
+            return
+        }
+        
+        guard isValidEmail(email) else {
+            errorMessage = AlertMessage(message: "Please enter a valid email address.")
+            isLoading = false
+            return
+        }
+        
+        guard let heightValue = Double(height), heightValue > 0 else {
+            errorMessage = AlertMessage(message: "Please enter a valid height.")
+            isLoading = false
+            return
+        }
+        
+        guard let weightValue = Double(weight), weightValue > 0 else {
+            errorMessage = AlertMessage(message: "Please enter a valid weight.")
+            isLoading = false
+            return
+        }
+        
+        guard let ageValue = Int(age), ageValue > 0 else {
+            errorMessage = AlertMessage(message: "Please enter a valid age.")
+            isLoading = false
+            return
+        }
+        
+        Task {
+            do {
+                try await authService.register(email: email, password: password, username: username, height: heightValue, weight: weightValue, age: ageValue)
+            } catch {
+                errorMessage = AlertMessage(message: error.localizedDescription)
+            }
+            isLoading = false
+        }
+    }
+    
+    private func handleLogin() {
+        isLoading = true
+        errorMessage = nil
+        
+        guard isValidEmail(email) else {
+            errorMessage = AlertMessage(message: "Please enter a valid email address.")
+            isLoading = false
+            return
+        }
+        
+        guard !password.isEmpty else {
+            errorMessage = AlertMessage(message: "Password is required.")
+            isLoading = false
+            return
+        }
+        
+        Task {
+            do {
+                try await authService.login(email: email, password: password)
+            } catch {
+                errorMessage = AlertMessage(message: error.localizedDescription)
+            }
+            isLoading = false
+        }
+    }
+    
+    private func isValidEmail(_ email: String) -> Bool {
+        let emailRegex = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}"
+        return NSPredicate(format: "SELF MATCHES %@", emailRegex).evaluate(with: email)
+    }
+    
 }
+
+struct AlertMessage: Identifiable {
+    let id = UUID() // Ensures uniqueness
+    let message: String
+}
+
 
 struct LoginView_Previews: PreviewProvider {
     static var previews: some View {

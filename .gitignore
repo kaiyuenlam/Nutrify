@@ -1,0 +1,13 @@
+# Xcode
+.DS_Store
+*.swp
+xcuserdata/
+DerivedData/
+
+# Build artifacts
+/build/
+*.xcodeproj/xcuserdata/
+
+
+.DS_Store
+*.xcuserstate

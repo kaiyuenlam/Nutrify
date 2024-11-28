@@ -10,7 +10,7 @@ import FirebaseAuth
 import FirebaseDatabase
 
 class UserSession : ObservableObject {
-    @Published var currentUser: User? = nil
+    @Published var currentUser: User? = nil // Nil when logged out
     
     init() {
         Auth.auth().addStateDidChangeListener { _, user in
@@ -22,10 +22,15 @@ class UserSession : ObservableObject {
             
             Task {
                 let userService = UserService()
-                let userObj = try await userService.getUser(id: user.uid)
-                DispatchQueue.main.async {
-                    self.currentUser = userObj
+                do {
+                    let userObj = try await userService.getUser(id: user.uid)
+                    DispatchQueue.main.async {
+                        self.currentUser = userObj
+                    }
+                } catch {
+                    print("Error fetching user: \(error.localizedDescription)")
                 }
+                
             }
         }
     }
