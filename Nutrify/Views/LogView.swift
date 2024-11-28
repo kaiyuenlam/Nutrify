@@ -56,5 +56,6 @@ struct LogView_Previews: PreviewProvider {
 
 
 #Preview {
-    LogView()
+    let nutritionData = NutritionDataModel()
+    return LogView(nutritionData: nutritionData)
 }
