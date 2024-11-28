@@ -52,10 +52,9 @@ struct ContentView: View {
                         Text("Social")
                     }
                     
-                    //                NavigationView {
-                    SettingsView()
-                        .navigationTitle("Settings")
-                    //                }
+                    NavigationView {
+                        SettingsView()
+                    }
                         .tabItem {
                             Image(systemName: "gearshape.fill")
                             Text("Settings")

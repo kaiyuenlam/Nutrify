@@ -2,48 +2,96 @@
 //  SettingsView.swift
 //  Nutrify
 //
-//  Created by Kelvin Lam on 8/11/2024.
+//  Created by Cyrus Yik on 27/11/2024.
 //
 
 import SwiftUI
 
 struct SettingsView: View {
-    let authService = AuthService()
+    @EnvironmentObject var userSession: UserSession
+    @State private var daysSinceJoined: Int = 0
+    
+    let settings = [
+        "Profile",
+        "Sharing & Privacy",
+        "Goal Setting",
+        "Push Notifications",
+    ]
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 20) {
-            Text("Settings")
-                .font(.largeTitle)
-                .fontWeight(.bold)
-            
-            // Example Settings Options
-            Toggle("Enable Notifications", isOn: .constant(true))
-            
-            Toggle("Dark Mode", isOn: .constant(false))
-            
-            Button("Log Out") {
-                do {
-                    try authService.logout()
+        VStack{
+            Text("Settings").fontWeight(.bold)
+            Divider()
+            HStack{
+                VStack{
+                    Text("Joined").font(.headline)
+                    Text(String(daysSinceJoined)).font(.title).fontWeight(.bold)
+                    Text(daysSinceJoined == 1 ? "day" : "days")
+                        .font(.caption)
                 }
-                catch let error {
-                    print(error.localizedDescription)
+                Spacer()
+                VStack {
+                    ProfilePicture(profilePictureUrl: userSession.currentUser?.profilePictureUrl, size: 70)
+                    Text(userSession.currentUser?.username ?? "").fontWeight(.heavy)
                 }
+                    .padding(.top, 20)
+                    .padding(.bottom, 20)
+                Spacer()
+                VStack {
+                    Text("Progress").font(.headline)
+                    Text("0 kg").font(.title).fontWeight(.bold)
+                    Text("changed").font(.caption)
+                }
+            }.padding(.horizontal, 50.0)
+            NavigationView{
+                List{
+                    ForEach(settings, id:\.self) {
+                        setting in NavigationLink(destination: Text(setting)){
+                            Text(setting)
+                        }.padding(20).listRowInsets(EdgeInsets())
+                    }
+                    Button("Log Out") {
+                        let authService = AuthService()
+                        do {
+                            try authService.logout()
+                        }
+                        catch let error {
+                            print(error.localizedDescription)
+                        }
+                    }
+                    .foregroundColor(.red)
+                    .padding(20)
+                    .listRowInsets(EdgeInsets())
+                }
+                .listStyle(.insetGrouped)
+                .padding(EdgeInsets(top: -30, leading: -20, bottom: 0, trailing: -20))
+                .scrollDisabled(true)
             }
-            .foregroundColor(.red)
-            
-            Spacer()
+        }.task {
+            daysSinceJoined = getDaysSince(date: userSession.currentUser?.createdAt) ?? 0
         }
-        .padding()
+    }
+    
+    private func getDaysSince(date: String?) -> Int? {
+        guard let date else { return nil }
+        
+        let isoFormatter = ISO8601DateFormatter()
+            
+        guard let createdAtDate = isoFormatter.date(from: date) else {
+            return nil
+        }
+        
+        let now = Date()
+        
+        let calendar = Calendar.current
+        let components = calendar.dateComponents([.day], from: createdAtDate, to: now)
+        
+        return components.day
     }
 }
-
-struct SettingsView_Previews: PreviewProvider {
-    static var previews: some View {
-        SettingsView()
-    }
-}
-
 
 #Preview {
-    SettingsView()
+    let userSession = UserSession()
+    userSession.currentUser = User(id: "1", username: "exampleusername", email: "example@example.com", height: 160, weight: 50, age: 20, createdAt: "2024-11-24T08:36:40Z")
+    return SettingsView().environmentObject(userSession)
 }

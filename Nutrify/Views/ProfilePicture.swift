@@ -9,13 +9,14 @@ import SwiftUI
 
 struct ProfilePicture: View {
     var profilePictureUrl: String? = nil
+    var size: CGFloat = 40
     
     var body: some View {
         AsyncImage(url: URL(string: profilePictureUrl ?? "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSZG3qkyaZZsnYyKv3-iTLyK_WT6QFmBQz3IQ&s")) {
             result in result.image?
                 .resizable()
         }
-            .frame(width: 40, height: 40)
+            .frame(width: size, height: size)
             .clipShape(Circle())
     }
 }
