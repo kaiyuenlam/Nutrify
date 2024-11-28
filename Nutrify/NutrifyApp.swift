@@ -27,7 +27,7 @@ class AppDelegate: NSObject, UIApplicationDelegate {
         do {
             let count = try context.count(for: fetchRequest)
             if count == 0 { // Only preload if there's no data
-                // Create records for each time period: last week, last month, last 3, 6 months, and last year
+                
                 let dateFormatter = DateFormatter()
                 dateFormatter.dateFormat = "yyyy/MM/dd"
 
@@ -72,9 +72,17 @@ struct NutrifyApp: App {
 
     var body: some Scene {
         WindowGroup {
-            ContentView()
-                .environment(\.managedObjectContext, persistenceController.container.viewContext)
-                .environmentObject(userSession)
+            
+            if userSession.currentUser != nil {
+                ContentView()
+                    .environment(\.managedObjectContext, persistenceController.container.viewContext)
+                    .environmentObject(userSession)
+            } else {
+                LogView()
+                    .environmentObject(userSession)
+            }
+            
+            
         }
     }
 }

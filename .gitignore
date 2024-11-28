@@ -9,3 +9,4 @@ DerivedData/
 *.xcodeproj/xcuserdata/
 
 
+.DS_Store
