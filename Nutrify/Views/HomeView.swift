@@ -10,240 +10,211 @@ import SwiftUI
 struct HomeView: View {
     @ObservedObject var nutritionData: NutritionDataModel
     @EnvironmentObject var userSession: UserSession
-        
-    var body: some View {
-        NavigationView {
-            VStack(alignment: .leading, spacing: 20) {
-                // User Info
-                if let currentUser = userSession.currentUser {
-                    Text(currentUser.username)
-                        .font(.title)
-                        .fontWeight(.bold)
-                } else {
-                    Text("Guest User")
-                        .font(.title)
-                        .fontWeight(.bold)
-                }
-                
-                
-                Text("Today’s Progress")
-                    .font(.headline)
-                
-                // Progress Stats
-                HStack(spacing: 30) {
-                    VStack(alignment: .leading) {
-                        Text("\(nutritionData.calorieGoal - nutritionData.calorieIntake) calories to go")
-                            .font(.largeTitle)
-                            .fontWeight(.bold)
-                            .foregroundColor(.blue)
-                        Text("Goal: \(nutritionData.calorieGoal)")
-                        Text("Intake: \(nutritionData.calorieIntake)")
-                        Text("Exercise: \(nutritionData.exerciseCalories)")
-                    }
-                    
-                    Spacer()
-                }
-                
-                // Circular Progress Bars
-                HStack(spacing: 20) {
-                    ProgressRingView(progress: nutritionData.weightToLose / 10, color: .red, label: "\(nutritionData.weightToLose) kg to go")
-                    ProgressRingView(progress: nutritionData.fatPercentage / 100, color: .yellow, label: "Fat \(Int(nutritionData.fatPercentage))%")
-                    ProgressRingView(progress: nutritionData.proteinPercentage / 100, color: .blue, label: "Protein \(Int(nutritionData.proteinPercentage))%")
-                    ProgressRingView(progress: nutritionData.carbPercentage / 100, color: .pink, label: "Carbs \(Int(nutritionData.carbPercentage))%")
-                }
-                
-                Spacer()
-            }
-            .padding()
-            .navigationTitle("Home")
-            .toolbar {
-                ToolbarItem(placement: .bottomBar) {
-                    //TabBarView()
-                }
-            }
-        }
+    @EnvironmentObject var todayRecordViewModel: TodayRecordViewModel
+    @Environment(\.managedObjectContext) private var context
+
+    // Inline calculation for progress
+    private func calculateProgress(current: Double, goal: Double) -> CGFloat {
+        return goal > 0 ? CGFloat(current / goal) : 0
     }
-}
-
-//// Progress Ring Component
-struct ProgressRingView: View {
-    var progress: Double
-    var color: Color
-    var label: String
 
     var body: some View {
-        VStack {
-            ZStack {
-                Circle()
-                    .stroke(lineWidth: 10)
-                    .opacity(0.3)
-                    .foregroundColor(color)
-                Circle()
-                    .trim(from: 0.0, to: progress)
-                    .stroke(style: StrokeStyle(lineWidth: 10, lineCap: .round))
-                    .foregroundColor(color)
-                    .rotationEffect(Angle(degrees: -90))
-                Text("\(Int(progress * 100))%")
-                    .font(.headline)
-                    .fontWeight(.bold)
-            }
-            Text(label)
-                .font(.caption)
-                .multilineTextAlignment(.center)
-        }
-    }
-}
-
-
-/*
-// updated for UI design
-import SwiftUI
-
-struct HomeView: View {
-    var body: some View {
-        VStack(spacing: 20) {
-            // User Info and Add Log
+        VStack(alignment: .leading) {
+            // Today's Progress Title
+            Text("Today's Progress")
+                .font(.title)
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .padding(.leading, 20)
+            
+            // Main Progress Bar Section
             HStack {
-                Image(systemName: "person.crop.circle")
-                    .resizable()
-                    .frame(width: 50, height: 50)
-                    .clipShape(Circle())
-                Spacer()
-            }
-            .padding()
-
-            // Progress Section
-            VStack {
-                Text("Today's Progress")
-                    .font(.title2)
-                    .bold()
-
-                ZStack {
-                    Circle()
-                        .stroke(Color.gray.opacity(0.3), lineWidth: 10)
-                        .frame(width: 150, height: 150)
-
-                    Circle()
-                        .trim(from: 0, to: 0.55) // Adjust this to match progress
-                        .stroke(Color.purple, style: StrokeStyle(lineWidth: 10, lineCap: .round))
-                        .rotationEffect(.degrees(-90))
-                        .frame(width: 150, height: 150)
-
-                    VStack {
-                        Text("1,200")
-                            .font(.largeTitle)
-                            .bold()
-                        Text("calories to go")
-                            .font(.subheadline)
-                            .foregroundColor(.gray)
+                CircularProgressBar(
+                    progress: calculateProgress(
+                        current: todayRecordViewModel.todayRecord?.calories ?? 0,
+                        goal: Double(nutritionData.calorieGoal)
+                    ),
+                    color: .purple,
+                    boldText: "\(nutritionData.calorieGoal - Int(todayRecordViewModel.todayRecord?.calories ?? 0))",
+                    subText: "calories to go",
+                    boldTextFont: .largeTitle
+                )
+                .frame(width: 180, height: 180, alignment: .leading)
+                .padding(10)
+                
+                // Goal, Intake, and Exercise Summary
+                VStack(alignment: .leading, spacing: 30) {
+                    HStack {
+                        Image(systemName: "target")
+                        Text("Goal \(nutritionData.calorieGoal)")
+                    }
+                    HStack {
+                        Image(systemName: "fork.knife")
+                        Text("Intake \(Int(todayRecordViewModel.todayRecord?.calories ?? 0))")
+                    }
+                    HStack {
+                        Image(systemName: "flame")
+                        Text("Exercise \(Int(nutritionData.exerciseCalories))")
                     }
                 }
-
-                // Goal, Intake, and Exercise Info
-                HStack {
-                    VStack {
-                        Text("Goal")
-                            .font(.caption)
-                            .foregroundColor(.gray)
-                        Text("2,700")
-                            .font(.headline)
-                    }
-                    Spacer()
-                    VStack {
-                        Text("Intake")
-                            .font(.caption)
-                            .foregroundColor(.gray)
-                        Text("1,700")
-                            .font(.headline)
-                    }
-                    Spacer()
-                    VStack {
-                        Text("Exercise")
-                            .font(.caption)
-                            .foregroundColor(.gray)
-                        Text("500")
-                            .font(.headline)
-                    }
-                }
-                .padding(.horizontal, 30)
-                .padding(.top, 10)
+                .font(.title3)
             }
-
-            // Nutrient Breakdown Section
-            HStack(spacing: 20) {
-                NutrientCircle(color: .red, label: "5 kg", description: "to go")
-                NutrientCircle(color: .yellow, label: "29g", description: "Fat")
-                NutrientCircle(color: .blue, label: "65g", description: "Protein")
-                NutrientCircle(color: .pink, label: "85g", description: "Carb")
+            
+            // Macronutrient Progress Bars
+            HStack {
+                CircularProgressBar(
+                    progress: calculateProgress(
+                        current: todayRecordViewModel.todayRecord?.weight ?? 0,
+                        goal: nutritionData.weightToLose
+                    ),
+                    lineWidth: 8,
+                    color: .red,
+                    boldText: "\(String(format: "%.1f", nutritionData.weightToLose)) kg",
+                    subText: "to go"
+                )
+                .frame(width: 80, height: 80)
+                .padding(5)
+                
+                CircularProgressBar(
+                    progress: calculateProgress(
+                        current: todayRecordViewModel.todayRecord?.fat ?? 0,
+                        goal: nutritionData.fatGoal
+                    ),
+                    lineWidth: 8,
+                    color: .orange,
+                    boldText: "\(Int(calculateProgress(current: todayRecordViewModel.todayRecord?.fat ?? 0, goal: nutritionData.fatGoal) * 100)) %",
+                    subText: "Fat"
+                )
+                .frame(width: 80, height: 80)
+                .padding(5)
+                
+                CircularProgressBar(
+                    progress: calculateProgress(
+                        current: todayRecordViewModel.todayRecord?.protein ?? 0,
+                        goal: nutritionData.proteinGoal
+                    ),
+                    lineWidth: 8,
+                    color: .blue,
+                    boldText: "\(Int(calculateProgress(current: todayRecordViewModel.todayRecord?.protein ?? 0, goal: nutritionData.proteinGoal) * 100)) %",
+                    subText: "Protein"
+                )
+                .frame(width: 80, height: 80)
+                .padding(5)
+                
+                CircularProgressBar(
+                    progress: calculateProgress(
+                        current: todayRecordViewModel.todayRecord?.carbs ?? 0,
+                        goal: nutritionData.carbGoal
+                    ),
+                    lineWidth: 8,
+                    color: .pink,
+                    boldText: "\(Int(calculateProgress(current: todayRecordViewModel.todayRecord?.carbs ?? 0, goal: nutritionData.carbGoal) * 100)) %",
+                    subText: "Carb"
+                )
+                .frame(width: 80, height: 80)
+                .padding(5)
             }
-            .padding(.horizontal)
-
+            .padding(20)
+            
             // Water Intake Section
-            VStack(alignment: .leading) {
-                HStack {
-                    Text("Water Intake")
-                        .font(.headline)
-                    Spacer()
-                    .font(.subheadline)
-                    .foregroundColor(.blue)
-                }
-                HStack(spacing: 10) {
-                    ForEach(0..<6) { index in
-                        Circle()
-                            .fill(index < 4 ? Color.blue : Color.gray.opacity(0.3))
-                            .frame(width: 20, height: 20)
-                    }
-                }
-                HStack(spacing: 10) {
-                    Text("Goal: 6 cups ")
-                        .font(.caption)
-                        .foregroundColor(.gray)
-                    Spacer()
-                    Text("2 cups left")
-                        .font(.caption)
-                        .foregroundColor(.gray)
-                }
-            }
-            .padding()
-            .background(Color.white)
-            .cornerRadius(10)
-            .shadow(color: .gray.opacity(0.2), radius: 5)
-            .padding(.horizontal)
-
-            Spacer()
+            WaterIntakeView()
         }
-        .background(Color(UIColor.systemGroupedBackground))
+        .frame(alignment: .top)
+        .onAppear {
+            // Ensure today's record is loaded
+            todayRecordViewModel.fetchOrCreateTodayRecord(context: context)
+        }
     }
 }
 
-struct NutrientCircle: View {
+
+struct CircularProgressBar: View {
+    var progress: CGFloat // Progress as a fraction (e.g., 0.65 for 65%)
+    var lineWidth: CGFloat = 10
     var color: Color
-    var label: String
-    var description: String
+    var boldText: String
+    var subText: String
+    var boldTextFont: Font = .headline // Default font for bold text
+    var subTextFont: Font = .subheadline
 
     var body: some View {
-        VStack {
-            ZStack {
-                Circle()
-                    .stroke(color, lineWidth: 5)
-                    .frame(width: 50, height: 50)
-                
-                Text(label)
-                    .font(.headline)
-            }
-                Text(description)
-                    .font(.caption)
+        ZStack {
+            Circle()
+                .stroke(Color.gray.opacity(0.2), lineWidth: lineWidth) // Background circle
+            Circle()
+                .trim(from: 0, to: progress)
+                .stroke(color, style: StrokeStyle(lineWidth: lineWidth, lineCap: .round))
+                .rotationEffect(.degrees(-90)) // Start at top
+                .animation(.easeOut, value: progress)
+
+            VStack {
+                Text(boldText)
+                    .font(boldTextFont)
+                    .bold()
+                Text(subText)
+                    .font(subTextFont)
                     .foregroundColor(.gray)
+            }
+            
             
         }
     }
 }
 
-struct HomeView_Previews: PreviewProvider {
-    static var previews: some View {
-        HomeView()
+struct WaterIntakeView: View {
+    // Dummy data
+    let goal = 6
+    let consumed = 4
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 10) {
+            // Title row
+            HStack {
+                Text("Water Intake")
+                    .font(.headline)
+                Spacer()
+                Text("View More")
+                    .font(.subheadline)
+                    .foregroundColor(.blue)
+            }
+
+            // Water drops row
+            HStack(spacing: 10) {
+                ForEach(0..<goal, id: \.self) { index in
+                    if index < consumed {
+                        // Filled water drop
+                        Image(systemName: "drop.fill")
+                            .resizable()
+                            .frame(width: 30, height: 30)
+                            .foregroundColor(.blue)
+                    } else {
+                        // Outlined water drop
+                        Image(systemName: "drop")
+                            .resizable()
+                            .frame(width: 30, height: 30)
+                            .foregroundColor(.blue)
+                    }
+                }
+            }
+
+            // Footer row
+            HStack {
+                Text("Goal: \(goal) cups")
+                    .font(.subheadline)
+                    .foregroundColor(.gray)
+                Spacer()
+                Text("\(goal - consumed) cups left")
+                    .font(.subheadline)
+                    .foregroundColor(.gray)
+            }
+        }
+        .padding()
+        .background(
+            RoundedRectangle(cornerRadius: 12)
+                .fill(Color.white)
+                .shadow(color: Color.black.opacity(0.1), radius: 5, x: 0, y: 5)
+        )
+        .padding(.horizontal)
     }
 }
- */
 
 

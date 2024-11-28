@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct LogView: View {
-    @ObservedObject var nutritionData: NutritionDataModel
-    
+    @EnvironmentObject var todayRecordViewModel: TodayRecordViewModel
+
     var body: some View {
         NavigationView {
             VStack(spacing: 30) {
@@ -19,7 +19,7 @@ struct LogView: View {
                     .padding()
                 
                 // Log Meal Button
-                NavigationLink(destination: LogPageView(nutritionData: NutritionDataModel())) {
+                NavigationLink(destination: LogPageView()) {
                     Text("Log Meal")
                         .frame(maxWidth: .infinity)
                         .frame(height: 50)
@@ -30,7 +30,7 @@ struct LogView: View {
                 }
                 
                 // Log Exercise Button
-                NavigationLink(destination:  ExerciseLogView(nutritionData: NutritionDataModel())) {
+                NavigationLink(destination: ExerciseLogView()) {
                     Text("Log Exercise")
                         .frame(maxWidth: .infinity)
                         .frame(height: 50)
@@ -50,12 +50,8 @@ struct LogView: View {
 // MARK: - Preview
 struct LogView_Previews: PreviewProvider {
     static var previews: some View {
-        LogView(nutritionData: NutritionDataModel())
+        let todayRecordViewModel = TodayRecordViewModel(context: PersistenceController.shared.container.viewContext)
+        return LogView().environmentObject(todayRecordViewModel)
     }
 }
 
-
-#Preview {
-    let nutritionData = NutritionDataModel()
-    return LogView(nutritionData: nutritionData)
-}

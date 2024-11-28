@@ -1,13 +1,15 @@
 // API Constants
 let edamamAppID = "802ee5c3"
 let edamamAppKey = "f02c953327da7b5f8554ad17b65b92ba"
+
 import SwiftUI
 
 struct LogPageView: View {
-    @ObservedObject var nutritionData: NutritionDataModel
     @State private var searchText = ""
     @State private var foodItems: [FoodItem] = []
     @State private var selectedItems: [FoodItem] = []
+    @EnvironmentObject var todayRecordViewModel: TodayRecordViewModel
+    @Environment(\.managedObjectContext) private var context
 
     var body: some View {
         NavigationView {
@@ -80,7 +82,7 @@ struct LogPageView: View {
                 // Add to meal Button
                 if !selectedItems.isEmpty {
                     Button(action: {
-                        addSelectedItemsToNutritionData()
+                        addSelectedItemsToTodayRecord()
                     }) {
                         HStack {
                             Spacer()
@@ -133,15 +135,24 @@ struct LogPageView: View {
         }
     }
     
-    // Add selected items' data to the NutritionDataModel
-    func addSelectedItemsToNutritionData() {
+    // Add selected items' data to today's Core Data record
+    func addSelectedItemsToTodayRecord() {
+        guard let todayRecord = todayRecordViewModel.todayRecord else { return }
+        
         for item in selectedItems {
-            nutritionData.calorieIntake += item.calories
-            nutritionData.fatPercentage += item.fat
-            nutritionData.proteinPercentage += item.protein
-            nutritionData.carbPercentage += item.carbs
+            todayRecord.calories += Double(item.calories)
+            todayRecord.fat += item.fat
+            todayRecord.protein += item.protein
+            todayRecord.carbs += item.carbs
         }
-        selectedItems.removeAll()
+        
+        // Save updates to Core Data
+        do {
+            try context.save()
+            selectedItems.removeAll() // Clear selected items
+        } catch {
+            print("Failed to save today's record: \(error)")
+        }
     }
 }
 

@@ -2,7 +2,7 @@
 //  AddPostView.swift
 //  Nutrify
 //
-//  Created by Jackie Lin on 11/28/24.
+//  Created by Kelvin Lam on 29/11/2024.
 //
 
 import SwiftUI

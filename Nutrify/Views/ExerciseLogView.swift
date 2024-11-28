@@ -4,14 +4,16 @@
 //
 //  Created by Michelle Chan on 27/11/2024.
 //
+
 import SwiftUI
 
 struct ExerciseLogView: View {
-    @ObservedObject var nutritionData: NutritionDataModel
     @State private var searchText = ""
     @State private var duration: String = ""
     @State private var exerciseResults: [ExerciseItem] = []
     @State private var selectedExercises: [ExerciseItem] = []
+    @EnvironmentObject var todayRecordViewModel: TodayRecordViewModel
+    @Environment(\.managedObjectContext) private var context
 
     var body: some View {
         NavigationView {
@@ -68,7 +70,7 @@ struct ExerciseLogView: View {
                 // Add to Log Button
                 if !selectedExercises.isEmpty {
                     Button(action: {
-                        addSelectedExercisesToNutritionData()
+                        addSelectedExercisesToTodayRecord()
                     }) {
                         HStack {
                             Spacer()
@@ -122,12 +124,22 @@ struct ExerciseLogView: View {
         }
     }
     
-    // Add selected exercises' data to the NutritionDataModel
-    func addSelectedExercisesToNutritionData() {
-        for item in selectedExercises {
-            nutritionData.exerciseCalories += Double(item.calories)
+    // Add selected exercises' data to today's Core Data record
+    func addSelectedExercisesToTodayRecord() {
+        guard let todayRecord = todayRecordViewModel.todayRecord else { return }
+        
+        let totalCaloriesBurned = selectedExercises.reduce(0.0) { result, item in
+            result + (item.calories / 60 * (Double(duration) ?? 0)) // Calculate per-minute burn
         }
-        selectedExercises.removeAll()
+        
+        todayRecord.exerciseCalories += totalCaloriesBurned
+        
+        do {
+            try context.save() // Save Core Data changes
+            selectedExercises.removeAll() // Clear selected items
+        } catch {
+            print("Failed to save today's record: \(error)")
+        }
     }
 }
 
@@ -143,10 +155,11 @@ struct ExerciseItem: Identifiable, Decodable {
     }
 }
 
-
 // MARK: - Preview
 struct ExerciseLogView_Previews: PreviewProvider {
     static var previews: some View {
-        ExerciseLogView(nutritionData: NutritionDataModel())
+        let todayRecordViewModel = TodayRecordViewModel(context: PersistenceController.shared.container.viewContext)
+        return ExerciseLogView()
+            .environmentObject(todayRecordViewModel)
     }
 }

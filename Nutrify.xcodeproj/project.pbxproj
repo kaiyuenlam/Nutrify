@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		78107C072CF90E21000234CF /* ExerciseLogView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78107C062CF90E21000234CF /* ExerciseLogView.swift */; };
+		78107C092CF90F3F000234CF /* TodayRecordViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78107C082CF90F3F000234CF /* TodayRecordViewModel.swift */; };
+		78107C0B2CF91810000234CF /* AddPostView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78107C0A2CF91810000234CF /* AddPostView.swift */; };
 		7832C70F2CDE35CC008148C4 /* NutrifyApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7832C70E2CDE35CC008148C4 /* NutrifyApp.swift */; };
 		7832C7112CDE35CC008148C4 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7832C7102CDE35CC008148C4 /* ContentView.swift */; };
 		7832C7132CDE35CE008148C4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7832C7122CDE35CE008148C4 /* Assets.xcassets */; };
@@ -40,10 +43,12 @@
 		8CDFE8962CF71DC900BC103D /* FirebaseAppCheck in Frameworks */ = {isa = PBXBuildFile; productRef = 8CDFE8952CF71DC900BC103D /* FirebaseAppCheck */; };
 		8CDFE8982CF71DC900BC103D /* FirebaseAppDistribution-Beta in Frameworks */ = {isa = PBXBuildFile; productRef = 8CDFE8972CF71DC900BC103D /* FirebaseAppDistribution-Beta */; };
 		8CFF55BC2CF7F63A007559A6 /* ProfilePicture.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CFF55BB2CF7F63A007559A6 /* ProfilePicture.swift */; };
-		8CFF55BE2CF8196D007559A6 /* AddPostView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CFF55BD2CF8196D007559A6 /* AddPostView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		78107C062CF90E21000234CF /* ExerciseLogView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExerciseLogView.swift; sourceTree = "<group>"; };
+		78107C082CF90F3F000234CF /* TodayRecordViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayRecordViewModel.swift; sourceTree = "<group>"; };
+		78107C0A2CF91810000234CF /* AddPostView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPostView.swift; sourceTree = "<group>"; };
 		7832C70B2CDE35CC008148C4 /* Nutrify.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Nutrify.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7832C70E2CDE35CC008148C4 /* NutrifyApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NutrifyApp.swift; sourceTree = "<group>"; };
 		7832C7102CDE35CC008148C4 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -70,7 +75,6 @@
 		8C8E76042CF8E142008F8D38 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		8CDFE88C2CF71D5700BC103D /* AuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthService.swift; sourceTree = "<group>"; };
 		8CFF55BB2CF7F63A007559A6 /* ProfilePicture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilePicture.swift; sourceTree = "<group>"; };
-		8CFF55BD2CF8196D007559A6 /* AddPostView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPostView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -148,6 +152,7 @@
 				8C6AF4482CF7200300981E9F /* User.swift */,
 				8C6AF4552CF7263A00981E9F /* UserSession.swift */,
 				8C6AF45F2CF7DD6200981E9F /* SocialPost.swift */,
+				78107C082CF90F3F000234CF /* TodayRecordViewModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -159,13 +164,14 @@
 				8C6AF4512CF721D800981E9F /* InputField.swift */,
 				7832C7252CDE3859008148C4 /* HomeView.swift */,
 				7832C7272CDE386A008148C4 /* LogView.swift */,
+				78107C062CF90E21000234CF /* ExerciseLogView.swift */,
 				7832C7292CDE3877008148C4 /* SocialView.swift */,
 				7832C72B2CDE3883008148C4 /* GoalView.swift */,
 				8C6AF44D2CF7211700981E9F /* LoginView.swift */,
 				8C6AF4572CF738E300981E9F /* NutrifyButton.swift */,
 				78F2C4452CF7654F00E36F5A /* ChartView.swift */,
 				8CFF55BB2CF7F63A007559A6 /* ProfilePicture.swift */,
-				8CFF55BD2CF8196D007559A6 /* AddPostView.swift */,
+				78107C0A2CF91810000234CF /* AddPostView.swift */,
 				8C8E76042CF8E142008F8D38 /* SettingsView.swift */,
 			);
 			path = Views;
@@ -280,14 +286,16 @@
 				8C6AF44E2CF7211700981E9F /* LoginView.swift in Sources */,
 				8C6AF4522CF721D800981E9F /* InputField.swift in Sources */,
 				78F2C4462CF7654F00E36F5A /* ChartView.swift in Sources */,
+				78107C072CF90E21000234CF /* ExerciseLogView.swift in Sources */,
 				8CFF55BC2CF7F63A007559A6 /* ProfilePicture.swift in Sources */,
 				8C6AF4642CF7E48C00981E9F /* SocialService.swift in Sources */,
+				78107C092CF90F3F000234CF /* TodayRecordViewModel.swift in Sources */,
 				8C6AF4622CF7DFBB00981E9F /* UserService.swift in Sources */,
+				78107C0B2CF91810000234CF /* AddPostView.swift in Sources */,
 				8C6AF4582CF738E300981E9F /* NutrifyButton.swift in Sources */,
 				8C6AF4492CF7200300981E9F /* User.swift in Sources */,
 				7832C70F2CDE35CC008148C4 /* NutrifyApp.swift in Sources */,
 				7832C72C2CDE3883008148C4 /* GoalView.swift in Sources */,
-				8CFF55BE2CF8196D007559A6 /* AddPostView.swift in Sources */,
 				7832C7282CDE386A008148C4 /* LogView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -430,6 +438,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -459,6 +468,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

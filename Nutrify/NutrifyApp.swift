@@ -78,7 +78,7 @@ struct NutrifyApp: App {
                     .environment(\.managedObjectContext, persistenceController.container.viewContext)
                     .environmentObject(userSession)
             } else {
-                LogView()
+                LoginView()
                     .environmentObject(userSession)
             }
             
