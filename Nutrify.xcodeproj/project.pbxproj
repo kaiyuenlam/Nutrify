@@ -30,12 +30,17 @@
 		8C6AF4542CF721F200981E9F /* LogPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C6AF4532CF721F200981E9F /* LogPageView.swift */; };
 		8C6AF4562CF7263A00981E9F /* UserSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C6AF4552CF7263A00981E9F /* UserSession.swift */; };
 		8C6AF4582CF738E300981E9F /* NutrifyButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C6AF4572CF738E300981E9F /* NutrifyButton.swift */; };
+		8C6AF45C2CF7D9DA00981E9F /* SettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C6AF45B2CF7D9DA00981E9F /* SettingView.swift */; };
+		8C6AF4602CF7DD6200981E9F /* SocialPost.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C6AF45F2CF7DD6200981E9F /* SocialPost.swift */; };
+		8C6AF4622CF7DFBB00981E9F /* UserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C6AF4612CF7DFBB00981E9F /* UserService.swift */; };
+		8C6AF4642CF7E48C00981E9F /* SocialService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C6AF4632CF7E48C00981E9F /* SocialService.swift */; };
 		8CDFE88D2CF71D5700BC103D /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CDFE88C2CF71D5700BC103D /* AuthService.swift */; };
 		8CDFE8902CF71DC900BC103D /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 8CDFE88F2CF71DC900BC103D /* FirebaseAnalytics */; };
 		8CDFE8922CF71DC900BC103D /* FirebaseAnalyticsOnDeviceConversion in Frameworks */ = {isa = PBXBuildFile; productRef = 8CDFE8912CF71DC900BC103D /* FirebaseAnalyticsOnDeviceConversion */; };
 		8CDFE8942CF71DC900BC103D /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */ = {isa = PBXBuildFile; productRef = 8CDFE8932CF71DC900BC103D /* FirebaseAnalyticsWithoutAdIdSupport */; };
 		8CDFE8962CF71DC900BC103D /* FirebaseAppCheck in Frameworks */ = {isa = PBXBuildFile; productRef = 8CDFE8952CF71DC900BC103D /* FirebaseAppCheck */; };
 		8CDFE8982CF71DC900BC103D /* FirebaseAppDistribution-Beta in Frameworks */ = {isa = PBXBuildFile; productRef = 8CDFE8972CF71DC900BC103D /* FirebaseAppDistribution-Beta */; };
+		8CFF55BC2CF7F63A007559A6 /* ProfilePicture.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CFF55BB2CF7F63A007559A6 /* ProfilePicture.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -52,7 +57,7 @@
 		7832C72B2CDE3883008148C4 /* GoalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalView.swift; sourceTree = "<group>"; };
 		7832C72F2CDE3A7B008148C4 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		78F2C4452CF7654F00E36F5A /* ChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartView.swift; sourceTree = "<group>"; };
-		78F2C44C2CF7678600E36F5A /* NutritionDataModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NutritionDataModel.swift; sourceTree = SOURCE_ROOT; };
+		78F2C44C2CF7678600E36F5A /* NutritionDataModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NutritionDataModel.swift; path = Nutrify/Models/NutritionDataModel.swift; sourceTree = SOURCE_ROOT; };
 		8C6AF4482CF7200300981E9F /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		8C6AF44A2CF7204A00981E9F /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		8C6AF44D2CF7211700981E9F /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
@@ -60,7 +65,12 @@
 		8C6AF4532CF721F200981E9F /* LogPageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogPageView.swift; sourceTree = "<group>"; };
 		8C6AF4552CF7263A00981E9F /* UserSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSession.swift; sourceTree = "<group>"; };
 		8C6AF4572CF738E300981E9F /* NutrifyButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NutrifyButton.swift; sourceTree = "<group>"; };
+		8C6AF45B2CF7D9DA00981E9F /* SettingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingView.swift; sourceTree = "<group>"; };
+		8C6AF45F2CF7DD6200981E9F /* SocialPost.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialPost.swift; sourceTree = "<group>"; };
+		8C6AF4612CF7DFBB00981E9F /* UserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserService.swift; sourceTree = "<group>"; };
+		8C6AF4632CF7E48C00981E9F /* SocialService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialService.swift; sourceTree = "<group>"; };
 		8CDFE88C2CF71D5700BC103D /* AuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthService.swift; sourceTree = "<group>"; };
+		8CFF55BB2CF7F63A007559A6 /* ProfilePicture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilePicture.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -137,6 +147,7 @@
 				78F2C44C2CF7678600E36F5A /* NutritionDataModel.swift */,
 				8C6AF4482CF7200300981E9F /* User.swift */,
 				8C6AF4552CF7263A00981E9F /* UserSession.swift */,
+				8C6AF45F2CF7DD6200981E9F /* SocialPost.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -144,6 +155,7 @@
 		8C6AF4502CF7213F00981E9F /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				8C6AF45B2CF7D9DA00981E9F /* SettingView.swift */,
 				8C6AF4532CF721F200981E9F /* LogPageView.swift */,
 				8C6AF4512CF721D800981E9F /* InputField.swift */,
 				7832C72F2CDE3A7B008148C4 /* SettingsView.swift */,
@@ -154,6 +166,7 @@
 				8C6AF44D2CF7211700981E9F /* LoginView.swift */,
 				8C6AF4572CF738E300981E9F /* NutrifyButton.swift */,
 				78F2C4452CF7654F00E36F5A /* ChartView.swift */,
+				8CFF55BB2CF7F63A007559A6 /* ProfilePicture.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -162,6 +175,8 @@
 			isa = PBXGroup;
 			children = (
 				8CDFE88C2CF71D5700BC103D /* AuthService.swift */,
+				8C6AF4612CF7DFBB00981E9F /* UserService.swift */,
+				8C6AF4632CF7E48C00981E9F /* SocialService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -251,6 +266,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8C6AF4602CF7DD6200981E9F /* SocialPost.swift in Sources */,
 				7832C7182CDE35CE008148C4 /* Persistence.swift in Sources */,
 				7832C72A2CDE3877008148C4 /* SocialView.swift in Sources */,
 				78F2C44D2CF7678600E36F5A /* NutritionDataModel.swift in Sources */,
@@ -261,8 +277,12 @@
 				8C6AF4562CF7263A00981E9F /* UserSession.swift in Sources */,
 				8C6AF4542CF721F200981E9F /* LogPageView.swift in Sources */,
 				8C6AF44E2CF7211700981E9F /* LoginView.swift in Sources */,
+				8C6AF45C2CF7D9DA00981E9F /* SettingView.swift in Sources */,
 				8C6AF4522CF721D800981E9F /* InputField.swift in Sources */,
 				78F2C4462CF7654F00E36F5A /* ChartView.swift in Sources */,
+				8CFF55BC2CF7F63A007559A6 /* ProfilePicture.swift in Sources */,
+				8C6AF4642CF7E48C00981E9F /* SocialService.swift in Sources */,
+				8C6AF4622CF7DFBB00981E9F /* UserService.swift in Sources */,
 				7832C7302CDE3A7B008148C4 /* SettingsView.swift in Sources */,
 				8C6AF4582CF738E300981E9F /* NutrifyButton.swift in Sources */,
 				8C6AF4492CF7200300981E9F /* User.swift in Sources */,

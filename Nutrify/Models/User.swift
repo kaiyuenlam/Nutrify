@@ -11,6 +11,7 @@ import FirebaseDatabase
 struct User {
     let id: String
     let username: String
+    let profilePictureUrl: String?
     let email: String
     let height: Double
     let weight: Double
@@ -22,6 +23,7 @@ struct User {
             let value = snapshot.value as? [String: Any],
             let id = value["id"] as? String,
             let username = value["username"] as? String,
+            let profilePictureUrl = value["profilePictureUrl"] as? String?,
             let email = value["email"] as? String,
             let height = value["height"] as? Double,
             let weight = value["weight"] as? Double,
@@ -33,6 +35,7 @@ struct User {
         
         self.id = id
         self.username = username
+        self.profilePictureUrl = profilePictureUrl
         self.email = email
         self.height = height
         self.weight = weight
@@ -40,9 +43,10 @@ struct User {
         self.createdAt = createdAt
     }
     
-    init(id: String, username: String, email: String, height: Double, weight: Double, age: Int, createdAt: String) {
+    init(id: String, username: String, profilePictureUrl: String? = nil, email: String, height: Double, weight: Double, age: Int, createdAt: String) {
         self.id = id
         self.username = username
+        self.profilePictureUrl = profilePictureUrl
         self.email = email
         self.height = height
         self.weight = weight
@@ -50,15 +54,18 @@ struct User {
         self.createdAt = createdAt
     }
     
-    func toDictionary() -> [String: Any] {
-        return [
+    func toDictionary() -> [String: Any?] {
+        let dict: [String: Any?] = [
             "id": self.id,
             "username": self.username,
+            "profilePictureUrl": self.profilePictureUrl,
             "email": self.email,
             "height": self.height,
             "weight": self.weight,
             "age": self.age,
             "createdAt": self.createdAt
         ]
+        
+        return dict.compactMapValues{ $0 }
     }
 }

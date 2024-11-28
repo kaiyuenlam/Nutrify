@@ -26,7 +26,7 @@ class AuthService {
         
         let user = User(id: authResult.user.uid, username: username, email: email, height: height, weight: weight, age: age, createdAt: currentDate)
         
-        let ref = Database.database().reference()
-        try await ref.child("users").child(user.id).setValue(user.toDictionary())
+        let userService = UserService()
+        try await userService.createUser(user: user)
     }
 }

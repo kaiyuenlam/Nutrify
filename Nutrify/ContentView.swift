@@ -45,7 +45,7 @@ struct ContentView: View {
                 
                 NavigationView {
                     SocialView()
-                        .navigationTitle("Social")
+                        .navigationTitle("")
                 }
                 .tabItem {
                     Image(systemName: "person.3.fill")
