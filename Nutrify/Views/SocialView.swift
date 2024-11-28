@@ -78,6 +78,7 @@ struct PostView: View {
     @EnvironmentObject var userSession: UserSession
     let post: SocialPost
     @State var isLiked: Bool = false
+    @State var likesCount: Int = 0
     
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
@@ -111,7 +112,6 @@ struct PostView: View {
                 Image(uiImage: uiImage)
                     .resizable()
                     .scaledToFit()
-//                    .frame(maxWidth: .infinity, maxHeight: 200)
                     .clipShape(RoundedRectangle(cornerRadius: 10))
             }
             // Post Text
@@ -129,10 +129,12 @@ struct PostView: View {
                         do {
                             if isLiked {
                                 isLiked = false
+                                likesCount -= 1
                                 try await socialService.unlikePost(userId: currentUser.id, postId: post.id)
                             }
                             else {
                                 isLiked = true
+                                likesCount += 1
                                 try await socialService.likePost(userId: currentUser.id, postId: post.id)
                             }
                         }
@@ -144,12 +146,11 @@ struct PostView: View {
                     HStack {
                         if isLiked {
                             Image(systemName: "heart.fill")
-                            Text("Liked")
                         }
                         else {
                             Image(systemName: "heart")
-                            Text("Like")
                         }
+                        Text("\(likesCount) \(likesCount == 1 ? "Like" : "Likes")")
                     }
                 }
                 .foregroundColor(.red)
@@ -166,6 +167,7 @@ struct PostView: View {
             Divider()
         }.task {
             isLiked = post.isLiked(userSession: userSession)
+            likesCount = post.likes.count
         }
     }
     
