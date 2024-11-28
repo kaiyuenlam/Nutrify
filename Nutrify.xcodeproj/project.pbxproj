@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		78107BE52CF8FDA6000234CF /* TodayRecordViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78107BE42CF8FDA5000234CF /* TodayRecordViewModel.swift */; };
+		78107BE72CF8FDDF000234CF /* SettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78107BE62CF8FDDF000234CF /* SettingView.swift */; };
+		78107BE92CF8FDE6000234CF /* TestUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78107BE82CF8FDE6000234CF /* TestUI.swift */; };
 		7832C70F2CDE35CC008148C4 /* NutrifyApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7832C70E2CDE35CC008148C4 /* NutrifyApp.swift */; };
 		7832C7112CDE35CC008148C4 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7832C7102CDE35CC008148C4 /* ContentView.swift */; };
 		7832C7132CDE35CE008148C4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7832C7122CDE35CE008148C4 /* Assets.xcassets */; };
@@ -44,6 +47,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		78107BE42CF8FDA5000234CF /* TodayRecordViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TodayRecordViewModel.swift; sourceTree = "<group>"; };
+		78107BE62CF8FDDF000234CF /* SettingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingView.swift; sourceTree = "<group>"; };
+		78107BE82CF8FDE6000234CF /* TestUI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestUI.swift; sourceTree = "<group>"; };
 		7832C70B2CDE35CC008148C4 /* Nutrify.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Nutrify.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7832C70E2CDE35CC008148C4 /* NutrifyApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NutrifyApp.swift; sourceTree = "<group>"; };
 		7832C7102CDE35CC008148C4 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -144,6 +150,7 @@
 		8C6AF4472CF71FF900981E9F /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				78107BE42CF8FDA5000234CF /* TodayRecordViewModel.swift */,
 				78F2C44C2CF7678600E36F5A /* NutritionDataModel.swift */,
 				8C6AF4482CF7200300981E9F /* User.swift */,
 				8C6AF4552CF7263A00981E9F /* UserSession.swift */,
@@ -155,6 +162,7 @@
 		8C6AF4502CF7213F00981E9F /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				78107BE62CF8FDDF000234CF /* SettingView.swift */,
 				8C6AF4532CF721F200981E9F /* LogPageView.swift */,
 				8C6AF4512CF721D800981E9F /* InputField.swift */,
 				7832C7252CDE3859008148C4 /* HomeView.swift */,
@@ -165,6 +173,7 @@
 				8C6AF4572CF738E300981E9F /* NutrifyButton.swift */,
 				78F2C4452CF7654F00E36F5A /* ChartView.swift */,
 				8CFF55BB2CF7F63A007559A6 /* ProfilePicture.swift */,
+				78107BE82CF8FDE6000234CF /* TestUI.swift */,
 				8CFF55BD2CF8196D007559A6 /* AddPostView.swift */,
 				8C8E76042CF8E142008F8D38 /* SettingsView.swift */,
 			);
@@ -272,9 +281,12 @@
 				7832C72A2CDE3877008148C4 /* SocialView.swift in Sources */,
 				78F2C44D2CF7678600E36F5A /* NutritionDataModel.swift in Sources */,
 				7832C71B2CDE35CE008148C4 /* Nutrify.xcdatamodeld in Sources */,
+				78107BE72CF8FDDF000234CF /* SettingView.swift in Sources */,
 				7832C7112CDE35CC008148C4 /* ContentView.swift in Sources */,
 				7832C7262CDE3859008148C4 /* HomeView.swift in Sources */,
 				8CDFE88D2CF71D5700BC103D /* AuthService.swift in Sources */,
+				78107BE52CF8FDA6000234CF /* TodayRecordViewModel.swift in Sources */,
+				78107BE92CF8FDE6000234CF /* TestUI.swift in Sources */,
 				8C6AF4562CF7263A00981E9F /* UserSession.swift in Sources */,
 				8C6AF4542CF721F200981E9F /* LogPageView.swift in Sources */,
 				8C6AF44E2CF7211700981E9F /* LoginView.swift in Sources */,
@@ -572,3 +584,4 @@
 	};
 	rootObject = 7832C7032CDE35CC008148C4 /* Project object */;
 }
+
