@@ -15,53 +15,54 @@ struct ContentView: View {
     
     var body: some View {
         if userSession.currentUser != nil {
-            TabView {
-                NavigationView {
-                    HomeView()
-                        .navigationTitle("Home")
-                }
-                .tabItem {
-                    Image(systemName: "house.fill")
-                    Text("Home")
-                }
-                
-                NavigationView {
-                    LogView()
-                        .navigationTitle("Log")
-                }
-                .tabItem {
-                    Image(systemName: "plus.circle")
-                    Text("Log")
-                }
-                
-                NavigationView {
-                    GoalView()
-                        .navigationTitle("Goals")
-                }
-                .tabItem {
-                    Image(systemName: "target")
-                    Text("Goal")
-                }
-                
-                NavigationView {
-                    SocialView()
-                        .navigationTitle("")
-                }
-                .tabItem {
-                    Image(systemName: "person.3.fill")
-                    Text("Social")
-                }
-                
-                NavigationView {
+            NavigationStack {
+                TabView {
+                    NavigationView {
+                        HomeView()
+                            .navigationTitle("Home")
+                    }
+                    .tabItem {
+                        Image(systemName: "house.fill")
+                        Text("Home")
+                    }
+                    
+                    NavigationView {
+                        LogView()
+                            .navigationTitle("Log")
+                    }
+                    .tabItem {
+                        Image(systemName: "plus.circle")
+                        Text("Log")
+                    }
+                    
+                    NavigationView {
+                        GoalView()
+                            .navigationTitle("Goals")
+                    }
+                    .tabItem {
+                        Image(systemName: "target")
+                        Text("Goal")
+                    }
+                    
+                    NavigationView {
+                        SocialView()
+                    }
+                    .tabItem {
+                        Image(systemName: "person.3.fill")
+                        Text("Social")
+                    }
+                    
+                    //                NavigationView {
                     SettingsView()
                         .navigationTitle("Settings")
+                    //                }
+                        .tabItem {
+                            Image(systemName: "gearshape.fill")
+                            Text("Settings")
+                        }
                 }
-                .tabItem {
-                    Image(systemName: "gearshape.fill")
-                    Text("Settings")
-                }
+                .accentColor(.blue)
             }
-            .accentColor(.blue)
         }
         else {
             LoginView()

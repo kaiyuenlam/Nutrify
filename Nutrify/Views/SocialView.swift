@@ -19,6 +19,24 @@ struct SocialView: View {
             else {
                 ScrollView {
                     VStack(spacing: 20) {
+                        HStack {
+                            Text("Social").font(.largeTitle).bold()
+                            Spacer()
+                            NavigationLink(destination: AddPostView()) {
+                                HStack {
+                                    Text("Add Post")
+                                    ZStack {
+                                        Circle()
+                                            .fill(.blue)
+                                            .frame(width: 30, height: 30)
+                                        
+                                        Image(systemName: "plus")
+                                            .foregroundColor(.white)
+                                            .font(.system(size: 20))
+                                    }
+                                }
+                            }.foregroundColor(.blue)
+                        }.padding()
                         ForEach(posts.sorted { post1, post2 in
                             guard let date1 = ISO8601DateFormatter().date(from: post1.createdAt),
                                   let date2 = ISO8601DateFormatter().date(from: post2.createdAt) else {
@@ -34,6 +52,7 @@ struct SocialView: View {
                 .refreshable {
                     await fetchData()
                 }
+                .padding(.top, 1)
             }
         }.task {
             isLoading = true
@@ -58,6 +77,7 @@ struct SocialView: View {
 struct PostView: View {
     @EnvironmentObject var userSession: UserSession
     let post: SocialPost
+    @State var isLiked: Bool = false
     
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
@@ -86,7 +106,14 @@ struct PostView: View {
                 .frame(maxWidth: .infinity, maxHeight: 200)
                 .clipShape(RoundedRectangle(cornerRadius: 10))
             
-            
+            if let uiImage = UIImage(data: Data(base64Encoded: post.imageUrl) ?? Data()) {
+                
+                Image(uiImage: uiImage)
+                    .resizable()
+                    .scaledToFit()
+//                    .frame(maxWidth: .infinity, maxHeight: 200)
+                    .clipShape(RoundedRectangle(cornerRadius: 10))
+            }
             // Post Text
             Text(post.description)
                 .font(.body)
@@ -100,10 +127,12 @@ struct PostView: View {
                     
                     Task {
                         do {
-                            if (post.isLiked(userSession: userSession)) {
+                            if isLiked {
+                                isLiked = false
                                 try await socialService.unlikePost(userId: currentUser.id, postId: post.id)
                             }
                             else {
+                                isLiked = true
                                 try await socialService.likePost(userId: currentUser.id, postId: post.id)
                             }
                         }
@@ -113,7 +142,7 @@ struct PostView: View {
                     }
                 }) {
                     HStack {
-                        if post.isLiked(userSession: userSession) {
+                        if isLiked {
                             Image(systemName: "heart.fill")
                             Text("Liked")
                         }
@@ -135,6 +164,8 @@ struct PostView: View {
             }
             .padding(.top, 5)
             Divider()
+        }.task {
+            isLiked = post.isLiked(userSession: userSession)
         }
     }
     

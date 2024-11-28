@@ -41,6 +41,7 @@
 		8CDFE8962CF71DC900BC103D /* FirebaseAppCheck in Frameworks */ = {isa = PBXBuildFile; productRef = 8CDFE8952CF71DC900BC103D /* FirebaseAppCheck */; };
 		8CDFE8982CF71DC900BC103D /* FirebaseAppDistribution-Beta in Frameworks */ = {isa = PBXBuildFile; productRef = 8CDFE8972CF71DC900BC103D /* FirebaseAppDistribution-Beta */; };
 		8CFF55BC2CF7F63A007559A6 /* ProfilePicture.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CFF55BB2CF7F63A007559A6 /* ProfilePicture.swift */; };
+		8CFF55BE2CF8196D007559A6 /* AddPostView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CFF55BD2CF8196D007559A6 /* AddPostView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -71,6 +72,7 @@
 		8C6AF4632CF7E48C00981E9F /* SocialService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialService.swift; sourceTree = "<group>"; };
 		8CDFE88C2CF71D5700BC103D /* AuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthService.swift; sourceTree = "<group>"; };
 		8CFF55BB2CF7F63A007559A6 /* ProfilePicture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilePicture.swift; sourceTree = "<group>"; };
+		8CFF55BD2CF8196D007559A6 /* AddPostView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPostView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -167,6 +169,7 @@
 				8C6AF4572CF738E300981E9F /* NutrifyButton.swift */,
 				78F2C4452CF7654F00E36F5A /* ChartView.swift */,
 				8CFF55BB2CF7F63A007559A6 /* ProfilePicture.swift */,
+				8CFF55BD2CF8196D007559A6 /* AddPostView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -288,6 +291,7 @@
 				8C6AF4492CF7200300981E9F /* User.swift in Sources */,
 				7832C70F2CDE35CC008148C4 /* NutrifyApp.swift in Sources */,
 				7832C72C2CDE3883008148C4 /* GoalView.swift in Sources */,
+				8CFF55BE2CF8196D007559A6 /* AddPostView.swift in Sources */,
 				7832C7282CDE386A008148C4 /* LogView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
