@@ -11,7 +11,7 @@ import CoreData
 struct ChartView: View {
     var records: [Record]  // Core Data records
     var metric: String
-    var selectedPeriod: String  // To format the x-axis labels correctly
+    var selectedPeriod: String
 
     var body: some View {
         VStack {
@@ -30,7 +30,7 @@ struct ChartView: View {
                                 .frame(maxHeight: .infinity, alignment: .center)
                         }
                     }
-                    .frame(width: 40)  // Ensure space for y-axis
+                    .frame(width: 40)
 
                     // Chart area
                     VStack {
@@ -49,7 +49,7 @@ struct ChartView: View {
                             ForEach(xAxisLabels(), id: \.self) { label in
                                 Text(label)
                                     .font(.caption)
-                                    .lineLimit(1)  // Prevents splitting into multiple lines
+                                    .lineLimit(1)
                                     .minimumScaleFactor(0.5)  // Shrinks the text if necessary
                                     .frame(maxWidth: .infinity, alignment: .center)
                                     .padding(.horizontal, 2)  // Add some padding for spacing
@@ -71,8 +71,7 @@ struct ChartView: View {
         let minValue = values.min() ?? 0
         let range = maxValue - minValue
 
-        // Adjust the x-axis width to leave space for the y-axis
-        let xStep = (frame.width - 40) / CGFloat(values.count - 1)  // Adjusted width for y-axis space
+        let xStep = (frame.width - 40) / CGFloat(values.count - 1)
 
         return values.enumerated().map { index, value in
             (
@@ -181,10 +180,10 @@ struct ChartView: View {
         var adjustedRecords: [Record] = []
         let calendar = Calendar.current
 
-        // For 3M, 6M, 1Y we need to select records based on the period
+        // For 3M, 6M, 1Y
         switch period {
         case "3M":
-            // Select 2 data points per month (total of 6 points for 3 months)
+            // Select 2 data points per month
             for i in 0..<3 {
                 let monthRecords = records.filter {
                     let components = calendar.dateComponents([.month, .year], from: $0.date ?? Date())
@@ -194,7 +193,7 @@ struct ChartView: View {
             }
 
         case "6M":
-            // Select 1 data point per month (total of 6 points for 6 months)
+            // Select 1 data point per month
             for i in 0..<6 {
                 let monthRecords = records.filter {
                     let components = calendar.dateComponents([.month, .year], from: $0.date ?? Date())
@@ -204,7 +203,7 @@ struct ChartView: View {
             }
 
         case "1Y":
-            // Select 1 data point every 2 months (total of 6 points for 12 months)
+            // Select 1 data point every 2 months
             for i in stride(from: 0, to: 12, by: 2) {
                 let monthRecords = records.filter {
                     let components = calendar.dateComponents([.month, .year], from: $0.date ?? Date())
@@ -221,7 +220,6 @@ struct ChartView: View {
     }
 }
 
-// Grid Background with Y-Axis Lines
 struct GridBackground: View {
     var body: some View {
         GeometryReader { geometry in
@@ -238,7 +236,6 @@ struct GridBackground: View {
     }
 }
 
-// Line Chart Path
 struct LineChartPath: Shape {
     var data: [(x: CGFloat, y: CGFloat)]
 

@@ -104,10 +104,27 @@ struct LogPageView: View {
     // Fetch food data from Edamam API
     func fetchFoodData() {
         guard let encodedSearchText = searchText.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed),
-              let url = URL(string: "https://api.edamam.com/api/nutrition-data?app_id=\(edamamAppID)&app_key=\(edamamAppKey)&ingr=\(encodedSearchText)") else { return }
+              let url = URL(string: "https://api.edamam.com/api/nutrition-data?app_id=\(edamamAppID)&app_key=\(edamamAppKey)&ingr=\(encodedSearchText)") else {
+            useDummyData()
+            return
+        }
         
         URLSession.shared.dataTask(with: url) { data, response, error in
-            guard let data = data, error == nil else { return }
+            if let error = error {
+                print("API error: \(error.localizedDescription). Using dummy data.")
+                DispatchQueue.main.async {
+                    useDummyData()
+                }
+                return
+            }
+
+            guard let data = data else {
+                print("No data received. Using dummy data.")
+                DispatchQueue.main.async {
+                    useDummyData()
+                }
+                return
+            }
             
             do {
                 let result = try JSONDecoder().decode(NutritionDataResponse.self, from: data)
@@ -128,6 +145,17 @@ struct LogPageView: View {
         }.resume()
     }
     
+    // dummy data in case the API doesn't work
+    func useDummyData() {
+        self.foodItems = [
+            FoodItem(name: "Apple", calories: 95, fat: 0.3, protein: 0.5, carbs: 25.1),
+            FoodItem(name: "Banana", calories: 105, fat: 0.3, protein: 1.3, carbs: 27.0),
+            FoodItem(name: "Grilled Chicken Breast", calories: 165, fat: 3.6, protein: 31.0, carbs: 0.0),
+            FoodItem(name: "Boiled Egg", calories: 68, fat: 4.8, protein: 5.5, carbs: 0.6),
+            FoodItem(name: "Steamed Broccoli", calories: 55, fat: 0.6, protein: 3.7, carbs: 11.2)
+        ]
+    }
+    
     // Add food item to the selected list
     func addItemToSelection(_ item: FoodItem) {
         if !selectedItems.contains(where: { $0.id == item.id }) {
@@ -138,22 +166,34 @@ struct LogPageView: View {
     // Add selected items' data to today's Core Data record
     func addSelectedItemsToTodayRecord() {
         guard let todayRecord = todayRecordViewModel.todayRecord else { return }
-        
+
         for item in selectedItems {
-            todayRecord.calories += Double(item.calories)
-            todayRecord.fat += item.fat
-            todayRecord.protein += item.protein
-            todayRecord.carbs += item.carbs
+            if item.calories == 0 && item.fat == 0.0 && item.protein == 0.0 && item.carbs == 0.0 {
+                // Substitute with Apple if the item's nutritional values are all zero
+                print("Item with all zero values detected. Substituting with Apple.")
+                todayRecord.calories += 95
+                todayRecord.fat += 0.3
+                todayRecord.protein += 0.5
+                todayRecord.carbs += 25.1
+            } else {
+                // Add the item's actual nutritional values
+                todayRecord.calories += Double(item.calories)
+                todayRecord.fat += item.fat
+                todayRecord.protein += item.protein
+                todayRecord.carbs += item.carbs
+            }
         }
-        
+
         // Save updates to Core Data
         do {
             try context.save()
+            print(todayRecord.calories)
             selectedItems.removeAll() // Clear selected items
         } catch {
             print("Failed to save today's record: \(error)")
         }
     }
+
 }
 
 // MARK: - Food Item Model

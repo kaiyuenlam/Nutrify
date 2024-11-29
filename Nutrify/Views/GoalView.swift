@@ -30,7 +30,7 @@
  }
  .pickerStyle(SegmentedPickerStyle())
  .padding()
- .background(Color(.systemBackground)) // Ensures the background matches the theme
+ .background(Color(.systemBackground))
  
  // Scrollable charts for each metric
  ScrollView(.vertical, showsIndicators: true) {
@@ -75,16 +75,14 @@
  break
  }
  
- // Filter records based on the selected period
  if let dateFrom = dateFrom {
  return records.filter { $0.date ?? Date() >= dateFrom }
  } else {
- return Array(records)  // If no period is selected, return all records
+ return Array(records)
  }
  }
  }
  
- // Preview for GoalView using actual data from PersistenceController
  struct GoalView_Previews: PreviewProvider {
  static var previews: some View {
  GoalView().environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)

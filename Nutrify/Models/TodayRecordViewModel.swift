@@ -7,15 +7,19 @@
 
 import Foundation
 import CoreData
+import Combine
 
 class TodayRecordViewModel: ObservableObject {
     @Published var todayRecord: Record?
     private var currentDate: Date?
     private var context: NSManagedObjectContext
+    private var cancellables = Set<AnyCancellable>()
+    @Published var forceRefresh = false
 
     init(context: NSManagedObjectContext) {
         self.context = context
         fetchOrCreateTodayRecord()
+        subscribeToCoreDataChanges()
     }
 
     func fetchOrCreateTodayRecord() {
@@ -36,9 +40,11 @@ class TodayRecordViewModel: ObservableObject {
 
         do {
             let records = try context.fetch(fetchRequest)
-            if let todayRecord = records.first {
-                self.todayRecord = todayRecord
+            if let existingRecord = records.first {
+                self.todayRecord = existingRecord
+                print("fetched new data")
             } else {
+                // Create a new record for today
                 let newRecord = Record(context: context)
                 newRecord.date = startOfDay
                 newRecord.calories = 0.0
@@ -49,9 +55,25 @@ class TodayRecordViewModel: ObservableObject {
                 newRecord.exerciseCalories = 0.0
                 try context.save()
                 self.todayRecord = newRecord
+                print("create a new record")
             }
         } catch {
             print("Failed to fetch or create today's record: \(error)")
+        }
+    }
+
+    private func subscribeToCoreDataChanges() {
+        NotificationCenter.default.publisher(for: .NSManagedObjectContextObjectsDidChange, object: context)
+            .sink { [weak self] notification in
+                print("Core Data changes detected.")
+                self?.fetchOrCreateTodayRecord()
+            }
+            .store(in: &cancellables)
+    }
+    
+    private func triggerUIRefresh() {
+        DispatchQueue.main.async {
+            self.forceRefresh.toggle()
         }
     }
 }
