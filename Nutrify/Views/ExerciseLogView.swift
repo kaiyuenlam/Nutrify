@@ -156,10 +156,10 @@ struct ExerciseItem: Identifiable, Decodable {
 }
 
 // MARK: - Preview
-struct ExerciseLogView_Previews: PreviewProvider {
-    static var previews: some View {
-        let todayRecordViewModel = TodayRecordViewModel(context: PersistenceController.shared.container.viewContext)
-        return ExerciseLogView()
-            .environmentObject(todayRecordViewModel)
-    }
-}
+//struct ExerciseLogView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        let todayRecordViewModel = TodayRecordViewModel(context: PersistenceController.shared.container.viewContext)
+//        return ExerciseLogView()
+//            .environmentObject(todayRecordViewModel)
+//    }
+//}

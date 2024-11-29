@@ -38,7 +38,8 @@ class SocialService {
             "imageUrl": imageUrl,
             "description": description,
             "createdAt": ISO8601DateFormatter().string(from: Date()),
-            "likes": [String]()
+            "likes": [String](),
+            "comments": [SocialPostComment]()
         ])
     }
     
@@ -52,5 +53,36 @@ class SocialService {
         let ref = Database.database().reference()
         
         try await ref.child("posts").child(postId).child("likes").child(userId).setValue(nil)
+    }
+    
+    func createComment(userId: String, postId: String, description: String) async throws {
+        let ref = Database.database().reference()
+        guard let key = ref.child("posts").childByAutoId().key else { return }
+        
+        try await ref.child("posts").child(postId).child("comments").child(key).setValue([
+            "id": key,
+            "userId": userId,
+            "description": description,
+            "createdAt": ISO8601DateFormatter().string(from: Date()),
+        ])
+    }
+    
+    func getComments(postId: String) async throws -> [Comment] {
+        let ref = Database.database().reference()
+        
+        let commentsSnapshot = try await ref.child("posts").child(postId).child("comments").getData()
+        
+        var comments = [Comment]()
+        for child in commentsSnapshot.children {
+            guard let childSnapshot = child as? DataSnapshot else {
+                continue
+            }
+            guard let comment = try await Comment(snapshot: childSnapshot) else {
+                continue
+            }
+
+            comments.append(comment)
+        }
+        return comments
     }
 }

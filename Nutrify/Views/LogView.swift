@@ -47,11 +47,11 @@ struct LogView: View {
     }
 }
 
-// MARK: - Preview
-struct LogView_Previews: PreviewProvider {
-    static var previews: some View {
-        let todayRecordViewModel = TodayRecordViewModel(context: PersistenceController.shared.container.viewContext)
-        return LogView().environmentObject(todayRecordViewModel)
-    }
-}
+//// MARK: - Preview
+//struct LogView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        let todayRecordViewModel = TodayRecordViewModel(context: PersistenceController.shared.container.viewContext)
+//        return LogView().environmentObject(todayRecordViewModel)
+//    }
+//}
 

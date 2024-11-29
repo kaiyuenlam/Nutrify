@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct SocialView: View {
-    @State private var isLoading = false
+    @State private var isLoading = true
     @State private var posts = [SocialPost]()
     
     var body: some View {
@@ -76,9 +76,10 @@ struct SocialView: View {
 // MARK: - Post View
 struct PostView: View {
     @EnvironmentObject var userSession: UserSession
-    let post: SocialPost
+    var post: SocialPost
     @State var isLiked: Bool = false
     @State var likesCount: Int = 0
+    @State var isModalShown: Bool = false
     
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
@@ -155,10 +156,12 @@ struct PostView: View {
                 }
                 .foregroundColor(.red)
                 
-                Button(action: {}) {
+                Button(action: {
+                    isModalShown = true
+                }) {
                     HStack {
                         Image(systemName: "bubble.right")
-                        Text("Comment")
+                        Text("\(post.comments.count) \(post.comments.count == 1 ? "Comment" : "Comments")")
                     }
                 }
                 .foregroundColor(.blue)
@@ -168,7 +171,9 @@ struct PostView: View {
         }.task {
             isLiked = post.isLiked(userSession: userSession)
             likesCount = post.likes.count
-        }
+        }.sheet(isPresented: $isModalShown, content: {
+            CommentsView(postId: post.id)
+        })
     }
     
     func timeAgo(date: String) -> String {

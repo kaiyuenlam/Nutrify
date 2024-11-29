@@ -8,6 +8,20 @@
 import Foundation
 import FirebaseDatabase
 
+struct SocialPostComment {
+    let id: String
+    let userId: String
+    let description: String
+    let createdAt: String
+    
+    init(id: String, userId: String, description: String, createdAt: String) {
+        self.id = id
+        self.userId = userId
+        self.description = description
+        self.createdAt = createdAt
+    }
+}
+
 struct SocialPost : Identifiable {
     let id: String
     let user: User
@@ -15,6 +29,7 @@ struct SocialPost : Identifiable {
     let description: String
     let createdAt: String
     let likes: [String]
+    var comments: [SocialPostComment]
     
     init?(snapshot: DataSnapshot) async throws {
         guard
@@ -24,7 +39,8 @@ struct SocialPost : Identifiable {
             let imageUrl = value["imageUrl"] as? String,
             let description = value["description"] as? String,
             let createdAt = value["createdAt"] as? String,
-            let likesObj = value["likes"] as? [String: Bool]?
+            let likesObj = value["likes"] as? [String: Bool]?,
+            let commentsObj = value["comments"] as? [String: Any]?
         else {
             return nil
         }
@@ -34,6 +50,32 @@ struct SocialPost : Identifiable {
         }
         else {
             self.likes = [String]()
+        }
+        
+        self.comments = [SocialPostComment]()
+        if let commentsObj = commentsObj {
+            for (_, value) in commentsObj {
+                if let commentDict = value as? [String: Any] {
+                   guard let id = commentDict["id"] as? String,
+                         let userId = commentDict["userId"] as? String,
+                         let description = commentDict["description"] as? String,
+                         let createdAt = commentDict["createdAt"] as? String else {
+                       continue
+                   }
+                   
+                   let socialPostComment = SocialPostComment(
+                       id: id,
+                       userId: userId,
+                       description: description,
+                       createdAt: createdAt
+                   )
+                   
+                   self.comments.append(socialPostComment)
+                }
+            }
+        }
+        else {
+            self.comments = [SocialPostComment]()
         }
 
         self.id = id
@@ -49,13 +91,14 @@ struct SocialPost : Identifiable {
         self.createdAt = createdAt
     }
     
-    init(id: String, user: User, imageUrl: String, description: String, createdAt: String, likes: [String]) {
+    init(id: String, user: User, imageUrl: String, description: String, createdAt: String, likes: [String], comments: [SocialPostComment]) {
         self.id = id
         self.user = user
         self.imageUrl = imageUrl
         self.description = description
         self.createdAt = createdAt
         self.likes = likes
+        self.comments = comments
     }
     
     func toDictionary() -> [String: Any] {
@@ -65,7 +108,8 @@ struct SocialPost : Identifiable {
             "imageUrl": self.imageUrl,
             "description": self.description,
             "createdAt": self.createdAt,
-            "likes": self.likes
+            "likes": self.likes,
+            "comments": self.comments
         ]
     }
     
