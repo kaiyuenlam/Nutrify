@@ -15,72 +15,77 @@ struct LoginView: View {
     let authService = AuthService()
 
     var body: some View {
-        VStack(spacing: 20) {
-            // App Logo and Title
-            Text("NUTRIFY")
-                .font(.largeTitle)
-                .fontWeight(.bold)
-                .foregroundColor(.blue)
-                .padding(.top, 40)
-            
-            Text("Welcome to Your Personal Nutrition Companion")
-                .font(.subheadline)
-                .foregroundColor(.gray)
-                .multilineTextAlignment(.center)
-                .padding(.horizontal)
-            
-            // Toggle between Login and Register
-            HStack {
-                Button(action: { isRegistering = false }) {
-                    Text("Login")
-                        .fontWeight(isRegistering ? .regular : .bold)
-                        .foregroundColor(isRegistering ? .gray : .blue)
+        if !userSession.isLoading {
+            VStack(spacing: 20) {
+                // App Logo and Title
+                Text("NUTRIFY")
+                    .font(.largeTitle)
+                    .fontWeight(.bold)
+                    .foregroundColor(.blue)
+                    .padding(.top, 40)
+                
+                Text("Welcome to Your Personal Nutrition Companion")
+                    .font(.subheadline)
+                    .foregroundColor(.gray)
+                    .multilineTextAlignment(.center)
+                    .padding(.horizontal)
+                
+                // Toggle between Login and Register
+                HStack {
+                    Button(action: { isRegistering = false }) {
+                        Text("Login")
+                            .fontWeight(isRegistering ? .regular : .bold)
+                            .foregroundColor(isRegistering ? .gray : .blue)
+                    }
+                    
+                    Button(action: { isRegistering = true }) {
+                        Text("Get Started")
+                            .fontWeight(isRegistering ? .bold : .regular)
+                            .foregroundColor(isRegistering ? .blue : .gray)
+                    }
                 }
                 
-                Button(action: { isRegistering = true }) {
-                    Text("Get Started")
-                        .fontWeight(isRegistering ? .bold : .regular)
-                        .foregroundColor(isRegistering ? .blue : .gray)
+                Divider()
+                
+                // Dynamic Input Fields
+                if isRegistering {
+                    // Registration Fields
+                    InputField(label: "User Name", value: $username)
+                    InputField(label: "Email Address", value: $email)
+                    SecureField("Password", text: $password)
+                        .textFieldStyle(RoundedBorderTextFieldStyle())
+                    InputField(label: "Height (cm)", value: $height)
+                        .keyboardType(.decimalPad)
+                    InputField(label: "Weight (kg)", value: $weight)
+                        .keyboardType(.decimalPad)
+                    InputField(label: "Age", value: $age)
+                        .keyboardType(.numberPad)
+                    
+                    NutrifyButton(isLoading: $isLoading, action: {
+                        handleRegistration()
+                    }, title: "Create an Account")
+                    
+                } else {
+                    // Login Fields
+                    InputField(label: "Email Address", value: $email)
+                        .keyboardType(.emailAddress)
+                    SecureField("Password", text: $password)
+                        .textFieldStyle(RoundedBorderTextFieldStyle())
+                    NutrifyButton(isLoading: $isLoading, action: {
+                        handleLogin()
+                    }, title: "Login")
                 }
-            }
-            
-            Divider()
-            
-            // Dynamic Input Fields
-            if isRegistering {
-                // Registration Fields
-                InputField(label: "User Name", value: $username)
-                InputField(label: "Email Address", value: $email)
-                SecureField("Password", text: $password)
-                    .textFieldStyle(RoundedBorderTextFieldStyle())
-                InputField(label: "Height (cm)", value: $height)
-                    .keyboardType(.decimalPad)
-                InputField(label: "Weight (kg)", value: $weight)
-                    .keyboardType(.decimalPad)
-                InputField(label: "Age", value: $age)
-                    .keyboardType(.numberPad)
                 
-                NutrifyButton(isLoading: $isLoading, action: {
-                    handleRegistration()
-                }, title: "Create an Account")
-                
-            } else {
-                // Login Fields
-                InputField(label: "Email Address", value: $email)
-                    .keyboardType(.emailAddress)
-                SecureField("Password", text: $password)
-                    .textFieldStyle(RoundedBorderTextFieldStyle())
-                NutrifyButton(isLoading: $isLoading, action: {
-                    handleLogin()
-                }, title: "Login")
+                Spacer()
             }
-            
-            Spacer()
+            .padding()
+            .disabled(isLoading)
+            .alert(item: $errorMessage) { alert in
+                Alert(title: Text("Error"), message: Text(alert.message), dismissButton: .default(Text("OK")))
+            }
         }
-        .padding()
-        .disabled(isLoading)
-        .alert(item: $errorMessage) { alert in
-            Alert(title: Text("Error"), message: Text(alert.message), dismissButton: .default(Text("OK")))
+        else {
+            ProgressView()
         }
     }
     
@@ -171,6 +176,7 @@ struct LoginView_Previews: PreviewProvider {
     static var previews: some View {
         let userSession = UserSession()
         userSession.currentUser = User(id: "1", username: "haha", email: "wow", height: 4, weight: 4, age: 8, createdAt: "no")
+        userSession.isLoading = false
         return LoginView().environmentObject(userSession)
     }
 }

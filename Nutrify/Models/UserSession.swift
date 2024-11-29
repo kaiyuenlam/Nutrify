@@ -11,12 +11,14 @@ import FirebaseDatabase
 
 class UserSession : ObservableObject {
     @Published var currentUser: User? = nil // Nil when logged out
+    @Published var isLoading: Bool = true
     
     init() {
         Auth.auth().addStateDidChangeListener { _, user in
             
             guard let user = user else {
                 self.currentUser = nil
+                self.isLoading = false
                 return
             }
             
@@ -27,10 +29,10 @@ class UserSession : ObservableObject {
                     DispatchQueue.main.async {
                         self.currentUser = userObj
                     }
-                } catch {
+                } catch let error {
                     print("Error fetching user: \(error.localizedDescription)")
                 }
-                
+                self.isLoading = false
             }
         }
     }
